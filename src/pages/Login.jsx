@@ -19,16 +19,43 @@ export default function Login() {
 
     try {
       const res = await API.post("/auth/login", form);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.user.role);
+      const data = res.data;
+
+      console.log("Login API response:", data);
+
+      // Handle token - could be data.token or data.accessToken
+      const token = data.token || data.accessToken;
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+
+      // Handle role - could be in different places depending on backend structure
+      const role = data.user?.role || data.role || "";
+      if (role) {
+        localStorage.setItem("role", role);
+      }
+
+      // Also store user info if available
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
       navigate("/");
       window.location.reload();
     } catch (err) {
-      const msg =
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Login failed. Please check your credentials.";
-      setError(msg);
+      console.error("Login error:", err);
+      // Only show API error messages, not internal JS errors
+      if (err.response) {
+        const msg =
+          err.response.data?.message ||
+          err.response.data?.error ||
+          "Login failed. Please check your credentials.";
+        setError(msg);
+      } else if (err.request) {
+        setError("Server not responding. Please try again later.");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
