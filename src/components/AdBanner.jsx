@@ -8,7 +8,7 @@ export default function AdBanner({id}) {
       window.googletag
         .defineSlot(
           "/6355419/Travel/Europe/France/Paris",
-          [300, 250],
+          [728, 90],
           id
         )
         .addService(window.googletag.pubads());
@@ -18,6 +18,8 @@ export default function AdBanner({id}) {
   }, [id]);
 
   return (
-    <div id={id} className="flex justify-center items-center bg-gray-200 w-full h-64"/>
+    <div id={id} className="flex justify-center items-center bg-gray-200 w-full h-64">
+        <span className="text-gray-500">Ad Banner - {id}</span> 
+    </div>
   );
 }
