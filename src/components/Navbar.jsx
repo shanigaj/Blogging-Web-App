@@ -34,6 +34,8 @@ export default function Navbar() {
             className="hover:text-yellow-400 bg-red-500 px-2 py-1 rounded text-sm font-medium hover:bg-red-600"
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("role");
+              localStorage.removeItem("user");
               window.location.href = "/login";
             }}
           >
