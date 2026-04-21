@@ -36,7 +36,7 @@ export default function Navbar() {
               localStorage.removeItem("token");
               localStorage.removeItem("role");
               localStorage.removeItem("user");
-              window.location.href = "/login";
+              window.location.href = "/";
             }}
           >
             Logout
